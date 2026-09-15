@@ -1,0 +1,50 @@
+[1.6] dot product, one word/element, 2 FLOP/pair
+L1: 1 ns/access, 4000000000 word/s
+dot-product memory ceiling: 4000 MFLOPS
+DRAM: 100 ns/access, 40000000 word/s
+dot-product memory ceiling: 40 MFLOPS
+[1.7] effective access time
+average = 58 ns, rate = 17.241379 Maccess/s
+one access/operation: 17.241379 Mop/s
+
+[1.8] WT, migrate P2 -> P1
+after P2 writes 1: P1=0, P2=1, Mem=1
+migrated process reads on P1: 0 (expected 1)
+after invalidating P1: 1
+[1.8] WB, migrate P1 -> P2
+after P1 writes 1: P1=1*, P2=I, Mem=0
+migrated process reads on P2: 0 (expected 1)
+after clean P1 + invalidate P2: 1
+
+[1.9] DMA input with WT
+after device writes 1: P1=0, P2=0, Mem=1
+CPU reads: P1=0, P2=0 (expected 1, 1)
+after invalidation: P1=1, P2=1
+[1.9] DMA output with WB
+after P1 writes 1: P1=1*, P2=0, Mem=0
+device reads: 0 (expected 1)
+after cleaning P1, device reads: 1
+P2 still reads: 0 (CPU coherence is a separate issue)
+
+[1.10] WB + invalidate
+before write: P1=0, P2=0, P3=0, Mem=0, owner=none
+after P1 writes 1: P1=1, P2=I, P3=I, Mem=0(stale), owner=P1
+P2 reads: 1
+after P2 reads: P1=1, P2=1, P3=I, Mem=0(stale), owner=P1
+after writeback: P1=1, P2=1, P3=I, Mem=1, owner=none
+events: {'updates': 0, 'invalidations': 1, 'misses': 1, 'cache_transfers': 1, 'writebacks': 1}
+
+[1.10] WB + update
+before write: P1=0, P2=0, P3=0, Mem=0, owner=none
+after P1 writes 1: P1=1, P2=1, P3=1, Mem=0(stale), owner=P1
+P2 reads: 1
+after P2 reads: P1=1, P2=1, P3=1, Mem=0(stale), owner=P1
+after writeback: P1=1, P2=1, P3=1, Mem=1, owner=none
+events: {'updates': 1, 'invalidations': 0, 'misses': 0, 'cache_transfers': 0, 'writebacks': 1}
+
+[comparison] counters after warmup, no final writeback
+pattern policy updates invalidations misses cache_transfers memory latest
+burst update 3 0 0 0 0 3
+burst invalidate 0 1 2 2 0 3
+interleaved update 3 0 0 0 0 3
+interleaved invalidate 0 3 6 6 0 3

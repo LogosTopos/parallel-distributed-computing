@@ -13,3 +13,5 @@
 | [references/](references/) | 参考书目信息 |
 
 目录约定见 [STRUCTURE.md](STRUCTURE.md)。
+
+已完成：[第一章习题选解（1.6—1.10）](exercises/chen-guoliang-3e/ch01/README.md)。
