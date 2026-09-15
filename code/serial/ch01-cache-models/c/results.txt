@@ -1,0 +1,51 @@
+[1.8] WT: migrate P2 -> P1
+P1=0, P2=1, Mem=1
+P1 reads 0 (latest=1)
+after invalidate P1: 1
+
+[1.8] WB: migrate P1 -> P2
+P1=1*, P2=I, Mem=0
+P2 reads 0 (latest=1)
+after clean P1 only, P2 still reads 0
+after invalidate P2 too: 1
+
+[1.9] DMA input with WT
+P1=0, P2=0, Mem=1
+P1 reads 0 (latest=1)
+P2 reads 0 (latest=1)
+P1=1, P2=1, Mem=1
+
+[1.9] DMA output with WB
+P1=1*, P2=0, Mem=0
+device reads 0 (latest=1)
+after clean P1, device reads 1
+P2 still reads 0
+
+[1.10] WB + invalidate
+P1=0, P2=0, P3=0, Mem=0, owner=none
+P1=1, P2=I, P3=I, Mem=0(stale), owner=P1
+P2 reads 1
+P1=1, P2=1, P3=I, Mem=0(stale), owner=P1
+P2 writes 2 (ownership handoff):
+P1=I, P2=2, P3=I, Mem=0(stale), owner=P2
+evict P2 (owner writes back before leaving):
+P1=I, P2=I, P3=I, Mem=2, owner=none
+
+[1.10] WB + update
+P1=0, P2=0, P3=0, Mem=0, owner=none
+P1=1, P2=1, P3=1, Mem=0(stale), owner=P1
+P2 reads 1
+P1=1, P2=1, P3=1, Mem=0(stale), owner=P1
+P2 writes 2 (ownership handoff):
+P1=2, P2=2, P3=2, Mem=0(stale), owner=P2
+evict P2 (owner writes back before leaving):
+P1=2, P2=I, P3=2, Mem=2, owner=none
+
+[comparison] after warmup, no final writeback
+pattern policy updates invalidations misses transfers memory latest
+burst update 3 0 0 0 0 3
+burst invalidate 0 1 2 2 0 3
+interleaved update 3 0 0 0 0 3
+interleaved invalidate 0 3 6 6 0 3
+
+PASS: scenarios, counters, 222220 protocol transitions

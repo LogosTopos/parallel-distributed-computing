@@ -8,6 +8,7 @@
 | `notes/distributed-systems/` | 逻辑时钟、互斥、共识、一致性与容错 |
 | `discussions/` | 按日期保存讨论；已整理的结论链接到专题笔记 |
 | `code/serial/` | 串行实现，供正确性和性能对照 |
+| `code/pthreads/` | C 工作线程、手动任务分配与同步教学示例 |
 | `code/openmp/` | OpenMP 共享存储实验 |
 | `code/mpi/` | MPI 消息传递实验 |
 | `code/cuda/` | GPU / CUDA 实验 |

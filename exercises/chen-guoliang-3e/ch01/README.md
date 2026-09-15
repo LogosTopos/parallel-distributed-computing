@@ -6,6 +6,8 @@
 
 [玩具程序](../../../code/serial/ch01-cache-models/demo.py) · [完整运行输出](../../../code/serial/ch01-cache-models/results.txt) · [运行说明](../../../code/serial/ch01-cache-models/README.md)
 
+新增 [C/C++ 教学路线](../../../notes/programming/ch01-teaching-guide.md)：从 1.8—1.10 的 C 状态模型，到多线程任务调度和 C++ 多节点消息模拟；并发 API 示例本次未运行。
+
 ## 1.6 向量点积的峰值性能
 
 **题意。** 处理器主频为 1 GHz，L1 容量为 32 KB，DRAM 容量为 512 MB；L1 访问延迟为 1 个时钟周期，DRAM 为 100 个时钟周期。每个存取周期取出 4 个字，即缓存行包含 4 个字。问向量点积可以获得的峰值性能。

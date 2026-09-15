@@ -2,6 +2,8 @@
 
 对应[《第一章习题选解》](../../../exercises/chen-guoliang-3e/ch01/README.md)中的 1.6—1.10 题。
 
+新增：[C 版 1.8—1.10](c/README.md)。继续学习实际线程与消息协作，可按 [C/C++ 教学路线](../../../notes/programming/ch01-teaching-guide.md) 阅读并行任务分配和分布式缓存协议。
+
 Python 3.10 及以上，无第三方依赖。在仓库根目录运行：
 
 ```bash
