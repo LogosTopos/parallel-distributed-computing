@@ -1,0 +1,31 @@
+# 本地系统与编辑器文件
+.DS_Store
+.idea/
+.vscode/
+
+# 编译产物
+build/
+cmake-build-*/
+*.o
+*.obj
+*.a
+*.so
+*.dylib
+*.dll
+*.exe
+a.out
+
+# Python 环境与缓存
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# 本地配置
+.env
+.env.*
+!.env.example
+
+# 本地参考教材
+/references/*.pdf
